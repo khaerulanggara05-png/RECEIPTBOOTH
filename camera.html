@@ -1,25 +1,81 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Camera</title></head>
-<body style="background:#000;color:white;text-align:center">
-<h1>Countdown</h1>
-<h2 id="cd">3</h2>
-<video id="cam" autoplay playsinline width="300"></video>
-<br>
-<button onclick="capture()">CAPTURE</button>
-<script src="system.js"></script>
-<script>
-const cd=document.getElementById('cd');let c=3;
-setInterval(()=>{c--;cd.innerText=c;if(c==0)cd.innerText='📸';},1000)
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Capture - Gozeal</title>
+    <style>
+        body { background: #000; color: white; text-align: center; font-family: Arial, sans-serif; overflow: hidden; }
+        .camera-container { position: relative; display: inline-block; margin-top: 20px; border: 5px solid #333; border-radius: 10px; overflow: hidden; }
+        
+        /* Mirroring kamera agar user tidak bingung */
+        video { transform: scaleX(-1); background: #222; }
+        
+        #cd { font-size: 8rem; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-shadow: 0 0 20px rgba(0,0,0,0.8); z-index: 10; pointer-events: none; }
+        .overlay { position: absolute; bottom: 20px; width: 100%; font-size: 1.5rem; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
 
-navigator.mediaDevices.getUserMedia({video:true}).then(s=>cam.srcObject=s)
+    <div class="camera-container">
+        <h1 id="cd">3</h1>
+        <video id="cam" autoplay playsinline width="600" height="800"></video>
+        <div class="overlay">GET READY!</div>
+    </div>
 
-function capture(){
- const canvas=document.createElement('canvas');
- canvas.width=300;canvas.height=400;
- const ctx=canvas.getContext('2d');
- ctx.drawImage(cam,0,0,300,400);
- const img=canvas.toDataURL('image/png');
- updateTransaction({photo:img}); location.href='frame.html';
-}
-</script>
-</body></html>
+    <script src="system.js"></script>
+    <script>
+        const video = document.getElementById('cam');
+        const cdDisplay = document.getElementById('cd');
+        let count = 3;
+
+        // 1. Akses Kamera dengan kualitas lebih baik
+        navigator.mediaDevices.getUserMedia({ 
+            video: { width: 600, height: 800 } 
+        }).then(stream => {
+            video.srcObject = stream;
+            startCountdown();
+        }).catch(err => {
+            alert("Kamera tidak ditemukan atau akses ditolak!");
+        });
+
+        // 2. Countdown Otomatis
+        function startCountdown() {
+            const timer = setInterval(() => {
+                count--;
+                if (count > 0) {
+                    cdDisplay.innerText = count;
+                } else if (count === 0) {
+                    cdDisplay.innerText = '📸';
+                    capture();
+                    clearInterval(timer); // Berhenti agar tidak minus
+                }
+            }, 1000);
+        }
+
+        // 3. Fungsi Capture dengan Mirroring Correction
+        function capture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 600;
+            canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+
+            // Balikkan canvas secara horizontal agar hasil foto sesuai yang dilihat di layar (mirror)
+            ctx.translate(canvas.width, 0);
+            ctx.scale(-1, 1);
+            
+            // Gambar frame dari video ke canvas
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imgData = canvas.toDataURL('image/png');
+            
+            // Simpan ke system.js
+            updateTransaction({ photo: imgData });
+
+            // Beri sedikit delay visual sebelum pindah
+            setTimeout(() => {
+                location.href = 'frame.html';
+            }, 500);
+        }
+    </script>
+</body>
+</html>
