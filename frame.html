@@ -10,62 +10,105 @@
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
     body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
 
-    .box{background:#1a1a1a;border-radius:20px;padding:25px;width:100%;max-width:600px;text-align:center}
+    .box{background:#1a1a1a;border-radius:20px;padding:20px;width:100%;max-width:900px;text-align:center}
 
     h1{margin-bottom:10px}
-    p{opacity:.7;margin-bottom:20px}
+    p{opacity:.7;margin-bottom:15px}
 
-    .preview{width:100%;height:260px;background:#000;border-radius:14px;margin-bottom:20px;display:flex;align-items:center;justify-content:center;font-size:50px;opacity:.6}
+    .preview{
+      position:relative;
+      width:100%;
+      max-width:350px;
+      margin:0 auto 20px;
+      aspect-ratio:3/4;
+      background:#000;
+      border-radius:16px;
+      overflow:hidden;
+    }
 
-    .frames{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+    .preview img.photo{width:100%;height:100%;object-fit:cover}
 
-    .frame-item{background:#111;border:2px solid transparent;border-radius:10px;padding:15px;cursor:pointer;transition:.2s}
-    .frame-item:hover{border-color:#00ffd5}
-    .frame-item.active{border-color:#00ffd5;background:#0a2f2a}
+    .frame{
+      position:absolute;
+      top:0;left:0;
+      width:100%;height:100%;
+      pointer-events:none;
+    }
 
-    .btn{padding:12px 20px;border:none;border-radius:10px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
+    .frames{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:10px;
+      margin-bottom:20px;
+    }
+
+    .frame-option{
+      background:#111;
+      border-radius:10px;
+      padding:10px;
+      cursor:pointer;
+      border:2px solid transparent;
+    }
+
+    .frame-option.active{border:2px solid #00ffd5}
+
+    .frame-option img{width:100%;border-radius:6px}
+
+    .btn{padding:14px;border:none;border-radius:12px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
   </style>
 </head>
 <body>
 
 <div class="box">
-  <h1>Pilih Frame</h1>
-  <p>Pilih frame untuk foto kamu</p>
+  <h1>Pilih Frame 🖼️</h1>
+  <p>Pilih frame favorit kamu</p>
 
-  <div class="preview" id="preview">PHOTO PREVIEW</div>
-
-  <div class="frames">
-    <div class="frame-item" onclick="selectFrame(1,this)">Frame 1</div>
-    <div class="frame-item" onclick="selectFrame(2,this)">Frame 2</div>
-    <div class="frame-item" onclick="selectFrame(3,this)">Frame 3</div>
-    <div class="frame-item" onclick="selectFrame(4,this)">Frame 4</div>
+  <div class="preview">
+    <img id="photoPreview" class="photo" />
+    <img id="framePreview" class="frame" />
   </div>
 
-  <button class="btn" onclick="goNext()">Lanjut</button>
+  <div class="frames">
+    <div class="frame-option" onclick="selectFrame(1,this)">
+      <img src="assets/frame1.png">
+    </div>
+    <div class="frame-option" onclick="selectFrame(2,this)">
+      <img src="assets/frame2.png">
+    </div>
+    <div class="frame-option" onclick="selectFrame(3,this)">
+      <img src="assets/frame3.png">
+    </div>
+    <div class="frame-option" onclick="selectFrame(4,this)">
+      <img src="assets/frame4.png">
+    </div>
+  </div>
+
+  <button class="btn" onclick="confirmFrame()">Lanjut</button>
 </div>
 
 <script>
-  if(localStorage.getItem('photo') !== 'captured'){
-    window.location.href = 'camera.html'
-  }
+  const photo = localStorage.getItem('photo')
+  if(!photo){ window.location.href='camera.html' }
 
-  let selected = null
+  document.getElementById('photoPreview').src = photo
+
+  let selectedFrame = null
 
   function selectFrame(num,el){
-    document.querySelectorAll('.frame-item').forEach(f=>f.classList.remove('active'))
+    document.querySelectorAll('.frame-option').forEach(f=>f.classList.remove('active'))
     el.classList.add('active')
-    selected = num
 
-    document.getElementById('preview').innerText = 'FRAME ' + num
-    localStorage.setItem('frame',num)
+    selectedFrame = 'assets/frame'+num+'.png'
+    document.getElementById('framePreview').src = selectedFrame
   }
 
-  function goNext(){
-    if(!selected){
+  function confirmFrame(){
+    if(!selectedFrame){
       alert('Pilih frame dulu')
       return
     }
 
+    localStorage.setItem('frame', selectedFrame)
     window.location.href = 'result.html'
   }
 </script>
