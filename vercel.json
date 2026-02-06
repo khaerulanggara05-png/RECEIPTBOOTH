@@ -1,6 +1,25 @@
-{
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/admin", "destination": "/admin.html" }
-  ]
+/* =============================
+   Thermal Print Optimization
+   ============================= */
+@media print {
+  @page {
+    margin: 0;
+    size: 80mm auto; /* Sesuaikan dengan lebar kertas printer thermalmu (58mm atau 80mm) */
+  }
+  
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  /* Sembunyikan semua tombol saat print */
+  button, .actions, .admin-access, h1 {
+    display: none !important;
+  }
+
+  /* Pastikan hasil foto memenuhi lebar kertas */
+  #final-canvas {
+    width: 100% !important;
+    border: none !important;
+  }
 }
