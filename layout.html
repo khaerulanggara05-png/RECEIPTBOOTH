@@ -1,167 +1,36 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Pilih Layout - Gozeal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      background: #0b0b0b;
-      color: white;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      user-select: none;
+<script src="system.js"></script>
+<script>
+    // Fungsi untuk memuat gambar preview dari Admin jika ada
+    function loadCustomPreviews() {
+        for (let i = 1; i <= 4; i++) {
+            const customUrl = localStorage.getItem("customFrameURL_" + i);
+            if (customUrl) {
+                // Cari gambar di dalam card ke-i dan ganti src-nya
+                const imgElements = document.querySelectorAll('.preview-image img');
+                if (imgElements[i-1]) {
+                    imgElements[i-1].src = customUrl;
+                }
+            }
+        }
     }
 
-    h2 {
-      font-size: 2.5rem;
-      margin-bottom: 5px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+    function select(layout, price, photoCount, defaultFrameFile) {
+        // Cek apakah ada frame custom yang diatur di Admin Panel
+        const customFrame = localStorage.getItem("customFrameURL_" + layout);
+        
+        // Gunakan custom frame jika ada, jika tidak gunakan file bawaan
+        const finalFrame = customFrame ? customFrame : defaultFrameFile;
+
+        updateTransaction({
+            layout: layout,
+            price: price,
+            photoCount: photoCount,
+            selectedFrameFile: finalFrame 
+        });
+        
+        location.href = 'payment.html';
     }
 
-    p.subtitle {
-      opacity: 0.6;
-      margin-bottom: 30px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 25px;
-      padding: 20px;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .card {
-      background: #161616;
-      padding: 15px;
-      border-radius: 24px;
-      text-align: center;
-      cursor: pointer;
-      border: 2px solid #222;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Area Gambar Preview */
-    .preview-image {
-      width: 100%;
-      height: 220px;
-      background: #000;
-      border-radius: 16px;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      border: 1px solid #333;
-    }
-
-    .preview-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* Gambar frame wedding kamu tidak akan terpotong */
-    }
-
-    /* Efek Interaksi */
-    .card:hover {
-      border-color: #00ffcc;
-      transform: translateY(-5px);
-      background: #1a1a1a;
-    }
-
-    .card:active {
-      transform: scale(0.96);
-    }
-
-    .layout-info {
-      padding: 10px 0;
-    }
-
-    .layout-name {
-      font-size: 1.3rem;
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-      color: #fff;
-    }
-
-    .price {
-      font-size: 1.1rem;
-      color: #00ffcc; /* Warna identitas Gozeal */
-      font-weight: 600;
-    }
-  </style>
-</head>
-<body>
-
-  <h2>PILIH LAYOUT</h2>
-  <p class="subtitle">Sesuaikan bingkai untuk momen spesialmu</p>
-
-  <div class="grid">
-    <div class="card" onclick="select(1, 15000, 4, 'wedding-strip.png')">
-      <div class="preview-image">
-        <img src="assets/frames/wedding-strip-preview.png" alt="Wedding Strip">
-      </div>
-      <div class="layout-info">
-        <span class="layout-name">SINGLE STRIP</span>
-        <span class="price">Rp15.000</span>
-      </div>
-    </div>
-
-    <div class="card" onclick="select(2, 20000, 6, 'classic-frame.png')">
-      <div class="preview-image">
-        <img src="assets/frames/classic-preview.png" alt="Classic">
-      </div>
-      <div class="layout-info">
-        <span class="layout-name">DOUBLE STRIP</span>
-        <span class="price">Rp20.000</span>
-      </div>
-    </div>
-
-    <div class="card" onclick="select(3, 25000, 4, 'grid-wedding.png')">
-      <div class="preview-image">
-        <img src="assets/frames/grid-preview.png" alt="Grid 4">
-      </div>
-      <div class="layout-info">
-        <span class="layout-name">WEDDING GRID</span>
-        <span class="price">Rp25.000</span>
-      </div>
-    </div>
-
-    <div class="card" onclick="select(4, 30000, 9, 'premium-collage.png')">
-      <div class="preview-image">
-        <img src="assets/frames/collage-preview.png" alt="Collage">
-      </div>
-      <div class="layout-info">
-        <span class="layout-name">PREMIUM COLLAGE</span>
-        <span class="price">Rp30.000</span>
-      </div>
-    </div>
-  </div>
-
-  <script src="system.js"></script>
-  <script>
-    function select(layout, price, photoCount, frameFile) {
-      // Sekarang kita simpan juga nama file frame-nya 
-      // agar nanti bisa langsung dipanggil di hasil akhir.
-      updateTransaction({
-        layout: layout,
-        price: price,
-        photoCount: photoCount,
-        selectedFrameFile: frameFile 
-      });
-      
-      location.href = 'payment.html';
-    }
-  </script>
-</body>
-</html>
+    // Jalankan pengecekan preview saat halaman dimuat
+    window.onload = loadCustomPreviews;
+</script>
