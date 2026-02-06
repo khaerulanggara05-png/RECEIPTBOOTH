@@ -1,16 +1,27 @@
 <script>
-  function checkAccess() {
+// 1. KEAMANAN: Cek PIN saat masuk
+function checkAccess() {
     const pin = prompt("Masukkan PIN Admin:");
-    if (pin !== "1234") { // Ganti dengan PIN rahasiamu
-      alert("Akses Ditolak!");
-      window.location.href = "index.html";
+    if (pin !== "1234") { // Ganti 1234 dengan PIN pilihanmu
+        alert("Akses Ditolak!");
+        window.location.href = "index.html";
     }
-  }
-  // Aktifkan ini jika ingin diproteksi:
-  // window.onload = checkAccess;
-</script>
+}
+// Aktifkan baris di bawah ini jika ingin proteksi PIN aktif:
+// window.onload = checkAccess;
 
-<script>
+// 2. KONFIGURASI FRAME DINAMIS
+function saveFrameConfig() {
+    const url = document.getElementById("frameUrlInput").value; // Ambil dari input baru
+    const target = document.getElementById("layoutTargetInput").value;
+    
+    if(!url || !target) return alert("Isi URL dan nomor layout!");
+    
+    localStorage.setItem("customFrameURL_" + target, url);
+    alert("Frame Layout " + target + " diperbarui! ✅");
+}
+
+// 3. LOG TRANSAKSI (Fungsi yang kamu kirim)
 function addLog(type, amount) {
     const logs = JSON.parse(localStorage.getItem("transactionLogs") || "[]");
     const newLog = {
@@ -20,5 +31,22 @@ function addLog(type, amount) {
     };
     logs.push(newLog);
     localStorage.setItem("transactionLogs", JSON.stringify(logs));
+    loadLogs(); // Refresh tampilan log setelah ditambah
 }
+
+// 4. LOAD & TAMPILKAN LOG
+function loadLogs() {
+    const logs = JSON.parse(localStorage.getItem("transactionLogs") || "[]");
+    const logBox = document.getElementById("logBox");
+    
+    if(logs.length === 0) {
+        logBox.innerText = "Belum ada transaksi.";
+    } else {
+        // Tampilkan log dalam format yang rapi
+        logBox.innerText = logs.map(l => `[${l.time}] ${l.type} - Rp${l.amount}`).reverse().join("\n");
+    }
+}
+
+// Panggil log saat halaman dibuka
+window.addEventListener('load', loadLogs);
 </script>
