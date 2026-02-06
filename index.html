@@ -1,147 +1,86 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Kiosk Receipt Booth</title>
+  <meta charset="UTF-8">
+  <title>Receipt Photobox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#111;
-  color:#fff;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
 
-.kiosk-container{
-  max-width:420px;
-  margin:auto;
-  padding:20px;
-}
+    body {
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #000000, #1a1a1a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      overflow: hidden;
+      cursor: pointer;
+    }
 
-.kiosk-header{
-  text-align:center;
-  border-bottom:1px solid #444;
-  padding-bottom:10px;
-}
+    .screen {
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
 
-.packages{
-  display:flex;
-  gap:10px;
-  margin-top:20px;
-}
+    h1 {
+      font-size: 4rem;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
 
-.package-card{
-  flex:1;
-  background:#1f1f1f;
-  padding:15px;
-  border-radius:10px;
-  text-align:center;
-  cursor:pointer;
-  border:1px solid #333;
-  transition:0.2s;
-}
+    p {
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
 
-.package-card:hover{
-  transform:scale(1.03);
-  border-color:#00ffcc;
-}
+    .touch {
+      margin-top: 40px;
+      font-size: 2rem;
+      animation: blink 1.5s infinite;
+      border: 2px solid white;
+      padding: 20px 50px;
+      border-radius: 50px;
+      display: inline-block;
+    }
 
-.package-card button{
-  margin-top:10px;
-  padding:8px 12px;
-  border:none;
-  border-radius:5px;
-  background:#00ffcc;
-  cursor:pointer;
-}
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
 
-.transaction{
-  margin-top:25px;
-  padding:15px;
-  border:1px dashed #555;
-  border-radius:10px;
-}
-
-.print-btn{
-  width:100%;
-  margin-top:10px;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#00ffcc;
-  font-weight:bold;
-  cursor:pointer;
-}
-</style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
 </head>
 
-<body>
+<body onclick="goNext()">
 
-<div class="kiosk-container">
-  <header class="kiosk-header">
-    <h1 id="boothName">MEMORY STORE</h1>
-    <p id="receiptTitle">Receipt Booth</p>
-  </header>
+  <div class="screen">
+    <h1>RECEIPT PHOTOBOX</h1>
+    <p>Self Photo • Instant Print • Softfile QR</p>
 
-  <section class="packages">
-    <div class="package-card" onclick="selectPackage(1)">
-      <h2 id="pkg1Name">Basic Receipt</h2>
-      <p id="pkg1Price">Rp 10.000</p>
-      <button>Pilih Paket</button>
+    <div class="touch">
+      TOUCH TO START
     </div>
+  </div>
 
-    <div class="package-card" onclick="selectPackage(2)">
-      <h2 id="pkg2Name">Premium Receipt</h2>
-      <p id="pkg2Price">Rp 20.000</p>
-      <button>Pilih Paket</button>
-    </div>
-  </section>
-
-  <section class="transaction">
-    <h3>Transaksi</h3>
-    <p>Paket: <span id="selectedPackage">-</span></p>
-    <p>Harga: <span id="selectedPrice">-</span></p>
-    <button class="print-btn" onclick="printReceipt()">Print Receipt</button>
-  </section>
-</div>
-
-<script>
-let selectedPkg = "";
-let selectedPrice = "";
-
-function selectPackage(pkg){
-  if(pkg === 1){
-    selectedPkg = "Basic Receipt";
-    selectedPrice = "Rp 10.000";
-  }else if(pkg === 2){
-    selectedPkg = "Premium Receipt";
-    selectedPrice = "Rp 20.000";
-  }
-
-  document.getElementById("selectedPackage").innerText = selectedPkg;
-  document.getElementById("selectedPrice").innerText = selectedPrice;
-}
-
-function printReceipt(){
-  if(selectedPkg === ""){
-    alert("Pilih paket dulu!");
-    return;
-  }
-
-  const receipt = `
-=== MEMORY STORE ===
-Receipt Booth
-
-Paket : ${selectedPkg}
-Harga : ${selectedPrice}
-
-Terima kasih 🙏
-`;
-
-  console.log(receipt);
-  alert("Receipt siap dicetak!\n\n" + receipt);
-}
-</script>
+  <script>
+    function goNext() {
+      // next step: pilih layout
+      window.location.href = "layout.html";
+    }
+  </script>
 
 </body>
 </html>
