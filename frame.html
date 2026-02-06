@@ -1,12 +1,68 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Frame</title></head>
-<body style="background:#000;color:white;text-align:center">
-<h1>Pilih Frame</h1>
-<button onclick="pick('frame1.png')">Frame 1</button>
-<button onclick="pick('frame2.png')">Frame 2</button>
-<button onclick="pick('frame3.png')">Frame 3</button>
-<script src="system.js"></script>
-<script>
-function pick(frame){ updateTransaction({frame}); location.href='result.html'; }
-</script>
-</body></html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Pilih Frame - Gozeal</title>
+    <style>
+        body { background: #111; color: white; text-align: center; font-family: Arial; padding: 20px; }
+        .preview-container { margin: 20px auto; width: 200px; height: 260px; background: #222; border: 2px solid #333; position: relative; overflow: hidden; }
+        #user-photo { width: 100%; height: 100%; object-fit: cover; }
+        
+        .frame-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 600px; margin: 30px auto; }
+        .frame-option { 
+            background: #1f1f1f; border: 2px solid #444; padding: 15px; 
+            border-radius: 10px; cursor: pointer; transition: 0.3s;
+        }
+        .frame-option:hover { border-color: #fff; background: #333; }
+        .frame-thumb { width: 50px; height: 70px; background: white; margin: 0 auto 10px; border-radius: 3px; }
+        
+        /* Contoh style thumb berbeda */
+        .f1 { background: white; }
+        .f2 { background: black; border: 1px solid white; }
+        .f3 { background: #333; border: 1px solid yellow; }
+    </style>
+</head>
+<body>
+
+    <h1>PILIH FRAME</h1>
+    <p>Lihat bagaimana fotomu terlihat dengan bingkai kami</p>
+
+    <div class="preview-container">
+        <img id="user-photo" src="" alt="Fotommu">
+    </div>
+
+    <div class="frame-grid">
+        <div class="frame-option" onclick="pick('frame-white.png')">
+            <div class="frame-thumb f1"></div>
+            <span>Minimalist White</span>
+        </div>
+        <div class="frame-option" onclick="pick('frame-black.png')">
+            <div class="frame-thumb f2"></div>
+            <span>Classic Black</span>
+        </div>
+        <div class="frame-option" onclick="pick('frame-vintage.png')">
+            <div class="frame-thumb f3"></div>
+            <span>Gozeal Special</span>
+        </div>
+    </div>
+
+    <script src="system.js"></script>
+    <script>
+        const tx = getTransaction();
+        const photoPreview = document.getElementById('user-photo');
+
+        // Tampilkan foto yang diambil tadi sebagai preview
+        if(tx.photo) {
+            photoPreview.src = tx.photo;
+        } else {
+            // Jika foto tidak ada (error/refresh), balik ke awal
+            location.href = 'index.html';
+        }
+
+        function pick(frameName) { 
+            updateTransaction({ frame: frameName }); 
+            location.href = 'result.html'; 
+        }
+    </script>
+</body>
+</html>
