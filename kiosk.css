@@ -1,25 +1,36 @@
 /* =============================
    Thermal Print Optimization
+   (Copy kode ini ke kiosk.css)
    ============================= */
 @media print {
   @page {
     margin: 0;
-    size: 80mm auto; /* Sesuaikan dengan lebar kertas printer thermalmu (58mm atau 80mm) */
+    /* Ukuran standar kertas thermal: 58mm atau 80mm */
+    size: 80mm auto; 
   }
   
   body {
-    background: #fff;
-    color: #000;
+    background: #fff !important;
+    color: #000 !important;
   }
 
-  /* Sembunyikan semua tombol saat print */
-  button, .actions, .admin-access, h1 {
+  /* Sembunyikan semua elemen UI agar tidak ikut ter-print */
+  button, 
+  .actions, 
+  .admin-access, 
+  .start-button, 
+  h1, 
+  p,
+  .nav-bar {
     display: none !important;
   }
 
-  /* Pastikan hasil foto memenuhi lebar kertas */
-  #final-canvas {
+  /* Pastikan hasil foto (canvas) memenuhi lebar kertas thermal */
+  #final-canvas, .result-photo {
     width: 100% !important;
+    max-width: 100% !important;
     border: none !important;
+    display: block !important;
+    margin: 0 auto !important;
   }
 }
