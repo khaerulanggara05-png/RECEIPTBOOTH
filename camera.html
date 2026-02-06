@@ -1,85 +1,25 @@
-
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Kamera - Receipt Photobox</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-    body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
-
-    .box{background:#1a1a1a;border-radius:20px;padding:20px;width:100%;max-width:700px;text-align:center}
-
-    h1{margin-bottom:10px}
-    p{opacity:.7;margin-bottom:10px}
-
-    .camera-box{position:relative;width:100%;aspect-ratio:3/4;background:#000;border-radius:16px;overflow:hidden;margin:15px 0}
-
-    video,canvas{width:100%;height:100%;object-fit:cover}
-
-    .countdown{
-      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      font-size:80px;font-weight:bold;color:#00ffd5;display:none
-    }
-
-    .btn{padding:14px;border:none;border-radius:12px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer;width:100%;margin-top:10px}
-  </style>
-</head>
-<body>
-
-<div class="box">
-  <h1>Siap Foto 📸</h1>
-  <p>Posisikan diri kamu di kamera</p>
-
-  <div class="camera-box">
-    <video id="video" autoplay></video>
-    <canvas id="canvas" style="display:none"></canvas>
-    <div class="countdown" id="countdown">3</div>
-  </div>
-
-  <button class="btn" onclick="startCountdown()">Mulai Foto</button>
-</div>
-
+<html><head><meta charset="UTF-8"><title>Camera</title></head>
+<body style="background:#000;color:white;text-align:center">
+<h1>Countdown</h1>
+<h2 id="cd">3</h2>
+<video id="cam" autoplay playsinline width="300"></video>
+<br>
+<button onclick="capture()">CAPTURE</button>
+<script src="system.js"></script>
 <script>
-  const video = document.getElementById('video')
-  const canvas = document.getElementById('canvas')
-  const countdownEl = document.getElementById('countdown')
+const cd=document.getElementById('cd');let c=3;
+setInterval(()=>{c--;cd.innerText=c;if(c==0)cd.innerText='📸';},1000)
 
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => { video.srcObject = stream })
-    .catch(err => { alert('Kamera tidak bisa diakses') })
+navigator.mediaDevices.getUserMedia({video:true}).then(s=>cam.srcObject=s)
 
-  function startCountdown(){
-    let count = 3
-    countdownEl.style.display = 'block'
-    countdownEl.innerText = count
-
-    const timer = setInterval(()=>{
-      count--
-      if(count > 0){
-        countdownEl.innerText = count
-      }else{
-        clearInterval(timer)
-        countdownEl.style.display = 'none'
-        takePhoto()
-      }
-    },1000)
-  }
-
-  function takePhoto(){
-    const ctx = canvas.getContext('2d')
-    canvas.width = video.videoWidth
-    canvas.height = video.videoHeight
-    ctx.drawImage(video,0,0,canvas.width,canvas.height)
-
-    const imgData = canvas.toDataURL('image/png')
-    localStorage.setItem('photo',imgData)
-
-    window.location.href = 'frame.html'
-  }
+function capture(){
+ const canvas=document.createElement('canvas');
+ canvas.width=300;canvas.height=400;
+ const ctx=canvas.getContext('2d');
+ ctx.drawImage(cam,0,0,300,400);
+ const img=canvas.toDataURL('image/png');
+ updateTransaction({photo:img}); location.href='frame.html';
+}
 </script>
-
-</body>
-</html>
+</body></html>
