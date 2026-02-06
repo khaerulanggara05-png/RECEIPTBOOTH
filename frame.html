@@ -1,117 +1,12 @@
-
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Pilih Frame - Receipt Photobox</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-    body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
-
-    .box{background:#1a1a1a;border-radius:20px;padding:20px;width:100%;max-width:900px;text-align:center}
-
-    h1{margin-bottom:10px}
-    p{opacity:.7;margin-bottom:15px}
-
-    .preview{
-      position:relative;
-      width:100%;
-      max-width:350px;
-      margin:0 auto 20px;
-      aspect-ratio:3/4;
-      background:#000;
-      border-radius:16px;
-      overflow:hidden;
-    }
-
-    .preview img.photo{width:100%;height:100%;object-fit:cover}
-
-    .frame{
-      position:absolute;
-      top:0;left:0;
-      width:100%;height:100%;
-      pointer-events:none;
-    }
-
-    .frames{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:10px;
-      margin-bottom:20px;
-    }
-
-    .frame-option{
-      background:#111;
-      border-radius:10px;
-      padding:10px;
-      cursor:pointer;
-      border:2px solid transparent;
-    }
-
-    .frame-option.active{border:2px solid #00ffd5}
-
-    .frame-option img{width:100%;border-radius:6px}
-
-    .btn{padding:14px;border:none;border-radius:12px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
-  </style>
-</head>
-<body>
-
-<div class="box">
-  <h1>Pilih Frame 🖼️</h1>
-  <p>Pilih frame favorit kamu</p>
-
-  <div class="preview">
-    <img id="photoPreview" class="photo" />
-    <img id="framePreview" class="frame" />
-  </div>
-
-  <div class="frames">
-    <div class="frame-option" onclick="selectFrame(1,this)">
-      <img src="assets/frame1.png">
-    </div>
-    <div class="frame-option" onclick="selectFrame(2,this)">
-      <img src="assets/frame2.png">
-    </div>
-    <div class="frame-option" onclick="selectFrame(3,this)">
-      <img src="assets/frame3.png">
-    </div>
-    <div class="frame-option" onclick="selectFrame(4,this)">
-      <img src="assets/frame4.png">
-    </div>
-  </div>
-
-  <button class="btn" onclick="confirmFrame()">Lanjut</button>
-</div>
-
+<html><head><meta charset="UTF-8"><title>Frame</title></head>
+<body style="background:#000;color:white;text-align:center">
+<h1>Pilih Frame</h1>
+<button onclick="pick('frame1.png')">Frame 1</button>
+<button onclick="pick('frame2.png')">Frame 2</button>
+<button onclick="pick('frame3.png')">Frame 3</button>
+<script src="system.js"></script>
 <script>
-  const photo = localStorage.getItem('photo')
-  if(!photo){ window.location.href='camera.html' }
-
-  document.getElementById('photoPreview').src = photo
-
-  let selectedFrame = null
-
-  function selectFrame(num,el){
-    document.querySelectorAll('.frame-option').forEach(f=>f.classList.remove('active'))
-    el.classList.add('active')
-
-    selectedFrame = 'assets/frame'+num+'.png'
-    document.getElementById('framePreview').src = selectedFrame
-  }
-
-  function confirmFrame(){
-    if(!selectedFrame){
-      alert('Pilih frame dulu')
-      return
-    }
-
-    localStorage.setItem('frame', selectedFrame)
-    window.location.href = 'result.html'
-  }
+function pick(frame){ updateTransaction({frame}); location.href='result.html'; }
 </script>
-
-</body>
-</html>
+</body></html>
