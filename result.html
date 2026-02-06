@@ -1,17 +1,82 @@
 <!DOCTYPE html>
 <html lang="id">
-<head><meta charset="UTF-8"><title>Result</title></head>
-<body style="background:#000;color:white;text-align:center">
-<h1>Hasil 🎉</h1>
-<img id="photo" width="300"><br>
-<button onclick="printPhoto()">PRINT</button>
-<button onclick="qr()">QR DOWNLOAD</button>
-<div id="qr"></div>
-<script src="system.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
-<script>
-const tx=getTransaction(); document.getElementById('photo').src=tx.photo;
-function printPhoto(){window.print()}
-function qr(){QRCode.toCanvas(document.createElement('canvas'), tx.photo, {width:200}, (e, c)=>{document.getElementById('qr').appendChild(c)})}
-</script>
-</body></html>
+<head>
+    <meta charset="UTF-8">
+    <title>Your Result - Gozeal</title>
+    <style>
+        body { background: #000; color: white; text-align: center; font-family: Arial; padding: 20px; }
+        #final-canvas { max-width: 90%; height: auto; border: 5px solid white; margin-bottom: 20px; }
+        .actions { margin-top: 20px; }
+        button { padding: 10px 20px; margin: 5px; font-weight: bold; cursor: pointer; }
+        
+        /* CSS khusus untuk print: hanya canvas yang muncul */
+        @media print {
+            body * { display: none; }
+            #final-canvas { display: block; width: 100%; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>HASIL FOTOMU 🎉</h1>
+    
+    <canvas id="final-canvas"></canvas>
+
+    <div class="actions">
+        <button onclick="window.print()">🖨️ PRINT RECEIPT</button>
+        <button onclick="downloadImage()">💾 DOWNLOAD</button>
+        <button onclick="location.href='index.html'">🔄 START OVER</button>
+    </div>
+
+    <div id="qr-area" style="margin-top: 30px;">
+        <p>Scan to get Softfile</p>
+        <canvas id="qr-canvas"></canvas>
+    </div>
+
+    <script src="system.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+        const tx = getTransaction();
+        const canvas = document.getElementById('final-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set ukuran canvas (sesuaikan dengan target print thermal)
+        canvas.width = 600;
+        canvas.height = 900;
+
+        async function processResult() {
+            // 1. Gambar Foto User
+            const userImg = new Image();
+            userImg.src = tx.photo;
+            await userImg.decode();
+            ctx.drawImage(userImg, 0, 0, 600, 800); // Sisakan ruang di bawah untuk footer/logo
+
+            // 2. Gambar Frame (PNG Transparan)
+            if (tx.frame) {
+                const frameImg = new Image();
+                frameImg.src = tx.frame; // misal: 'frame1.png'
+                await frameImg.decode();
+                ctx.drawImage(frameImg, 0, 0, 600, 900);
+            }
+
+            // 3. Tambahkan Teks atau Logo Gozeal di bawah
+            ctx.fillStyle = "white";
+            ctx.font = "20px Courier New";
+            ctx.textAlign = "center";
+            ctx.fillText("GOZEAL PHOTOBOX - " + new Date().toLocaleDateString(), 300, 850);
+
+            // 4. Generate QR (Idealnya link ke web view, tapi ini simulasi link)
+            QRCode.toCanvas(document.getElementById('qr-canvas'), "https://gozeal.com/view/" + Date.now(), { width: 150 });
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'gozeal-photo.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        window.onload = processResult;
+    </script>
+</body>
+</html>
