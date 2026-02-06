@@ -3,27 +3,22 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Pilih Layout - Receipt Photobox</title>
+  <title>Pembayaran - Receipt Photobox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
     body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
 
-    .box{background:#1a1a1a;border-radius:20px;padding:25px;width:100%;max-width:700px;text-align:center}
+    .box{background:#1a1a1a;border-radius:20px;padding:25px;width:100%;max-width:600px;text-align:center}
 
     h1{margin-bottom:10px}
-    p{opacity:.7;margin-bottom:20px}
+    p{opacity:.7;margin-bottom:15px}
 
-    .layouts{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:20px}
+    .summary{background:#111;border-radius:14px;padding:15px;margin-bottom:20px}
+    .row{display:flex;justify-content:space-between;margin-bottom:8px}
 
-    .layout-item{background:#111;border:2px solid transparent;border-radius:14px;padding:20px;cursor:pointer;transition:.2s}
-    .layout-item:hover{border-color:#00ffd5}
-    .layout-item.active{border-color:#00ffd5;background:#0a2f2a}
-
-    .layout-preview{height:140px;background:#000;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;opacity:.6}
-
-    .price{font-size:18px;font-weight:bold;margin-top:5px;color:#00ffd5}
+    .qr{background:#000;border-radius:16px;height:220px;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:.7;margin-bottom:15px}
 
     .btn{padding:14px;border:none;border-radius:12px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
   </style>
@@ -31,60 +26,39 @@
 <body>
 
 <div class="box">
-  <h1>Pilih Layout 📐</h1>
-  <p>Pilih model cetak photobox</p>
+  <h1>Pembayaran 💳</h1>
+  <p>Scan QR untuk melanjutkan</p>
 
-  <div class="layouts">
-    <div class="layout-item" onclick="selectLayout(1,10000,this)">
-      <div class="layout-preview">Layout 1</div>
-      <div>1 Photo Strip</div>
-      <div class="price">Rp 10.000</div>
-    </div>
-
-    <div class="layout-item" onclick="selectLayout(2,15000,this)">
-      <div class="layout-preview">Layout 2</div>
-      <div>2 Photo Strip</div>
-      <div class="price">Rp 15.000</div>
-    </div>
-
-    <div class="layout-item" onclick="selectLayout(3,20000,this)">
-      <div class="layout-preview">Layout 3</div>
-      <div>3 Photo Strip</div>
-      <div class="price">Rp 20.000</div>
-    </div>
-
-    <div class="layout-item" onclick="selectLayout(4,25000,this)">
-      <div class="layout-preview">Layout 4</div>
-      <div>4 Photo Strip</div>
-      <div class="price">Rp 25.000</div>
-    </div>
+  <div class="summary">
+    <div class="row"><span>Layout</span><span id="layoutInfo">-</span></div>
+    <div class="row"><span>Harga</span><span id="priceInfo">-</span></div>
   </div>
 
-  <button class="btn" onclick="goNext()">Lanjut ke Pembayaran</button>
+  <div class="qr" id="qrBox">
+    QR PAYMENT
+  </div>
+
+  <button class="btn" onclick="confirmPayment()">Saya Sudah Bayar</button>
 </div>
 
 <script>
-  let selectedLayout = null
-  let selectedPrice = null
+  const layout = localStorage.getItem('layout')
+  const price = localStorage.getItem('price')
 
-  function selectLayout(id,price,el){
-    document.querySelectorAll('.layout-item').forEach(l=>l.classList.remove('active'))
-    el.classList.add('active')
-
-    selectedLayout = id
-    selectedPrice = price
-
-    localStorage.setItem('layout',id)
-    localStorage.setItem('price',price)
+  if(!layout || !price){
+    window.location.href = 'layout.html'
   }
 
-  function goNext(){
-    if(!selectedLayout){
-      alert('Pilih layout dulu')
-      return
-    }
+  document.getElementById('layoutInfo').innerText = 'Layout ' + layout
+  document.getElementById('priceInfo').innerText = 'Rp ' + price
 
-    window.location.href = 'payment.html'
+  // Simulasi QR
+  document.getElementById('qrBox').innerText = 'QRIS - Rp ' + price
+
+  function confirmPayment(){
+    // simulasi sukses
+    localStorage.setItem('paid','true')
+    window.location.href = 'camera.html'
   }
 </script>
 
