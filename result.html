@@ -1,105 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Hasil Foto - Receipt Photobox</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-    body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
-
-    .box{background:#1a1a1a;border-radius:20px;padding:20px;width:100%;max-width:900px;text-align:center}
-
-    h1{margin-bottom:10px}
-    p{opacity:.7;margin-bottom:15px}
-
-    .final-preview{
-      position:relative;
-      width:100%;
-      max-width:350px;
-      margin:0 auto 20px;
-      aspect-ratio:3/4;
-      background:#000;
-      border-radius:16px;
-      overflow:hidden;
-    }
-
-    .final-preview img.photo{width:100%;height:100%;object-fit:cover}
-    .final-preview img.frame{position:absolute;top:0;left:0;width:100%;height:100%}
-
-    .actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-bottom:15px;
-    }
-
-    .btn{padding:14px;border:none;border-radius:12px;font-weight:bold;font-size:15px;cursor:pointer}
-
-    .print{background:#00ffd5;color:#000}
-    .download{background:#fff;color:#000}
-
-    .qr-box{background:#fff;padding:15px;border-radius:12px;display:inline-block}
-    canvas{display:none}
-  </style>
-</head>
-<body>
-
-<div class="box">
-  <h1>Hasil Foto 🎉</h1>
-  <p>Scan QR untuk download atau langsung print</p>
-
-  <div class="final-preview" id="finalPreview">
-    <img id="photoImg" class="photo">
-    <img id="frameImg" class="frame">
-  </div>
-
-  <div class="actions">
-    <button class="btn print" onclick="printPhoto()">🖨️ Print</button>
-    <button class="btn download" onclick="generateQR()">📱 Generate QR</button>
-  </div>
-
-  <div id="qrContainer"></div>
-</div>
-
+<head><meta charset="UTF-8"><title>Result</title></head>
+<body style="background:#000;color:white;text-align:center">
+<h1>Hasil 🎉</h1>
+<img id="photo" width="300"><br>
+<button onclick="printPhoto()">PRINT</button>
+<button onclick="qr()">QR DOWNLOAD</button>
+<div id="qr"></div>
+<script src="system.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 <script>
-  const photo = localStorage.getItem('photo')
-  const frame = localStorage.getItem('frame')
-
-  if(!photo || !frame){ window.location.href='layout.html' }
-
-  const photoImg = document.getElementById('photoImg')
-  const frameImg = document.getElementById('frameImg')
-
-  photoImg.src = photo
-  frameImg.src = frame
-
-  function printPhoto(){
-    const w = window.open('','_blank')
-    w.document.write(`
-      <html><head><title>Print</title></head>
-      <body style="margin:0;display:flex;align-items:center;justify-content:center;">
-        <div style="position:relative;width:350px;height:500px;">
-          <img src="${photo}" style="width:100%;height:100%;object-fit:cover;" />
-          <img src="${frame}" style="position:absolute;top:0;left:0;width:100%;height:100%;" />
-        </div>
-        <script>window.print();</script>
-      </body></html>
-    `)
-    w.document.close()
-  }
-
-  function generateQR(){
-    const link = photo
-    const qrDiv = document.getElementById('qrContainer')
-    qrDiv.innerHTML = '<div class="qr-box"><canvas id="qr"></canvas><p style="color:#000;margin-top:8px">Scan untuk download</p></div>'
-
-    QRCode.toCanvas(document.getElementById('qr'), link, {width:200})
-  }
+const tx=getTransaction(); document.getElementById('photo').src=tx.photo;
+function printPhoto(){window.print()}
+function qr(){QRCode.toCanvas(document.createElement('canvas'), tx.photo, {width:200}, (e, c)=>{document.getElementById('qr').appendChild(c)})}
 </script>
-
-</body>
-</html>
+</body></html>
