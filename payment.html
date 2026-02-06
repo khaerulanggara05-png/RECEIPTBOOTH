@@ -1,75 +1,95 @@
+# layout.html
 
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Pembayaran - Receipt Photobox</title>
+  <title>Pilih Layout - Receipt Photobox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
     body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
 
-    .box{background:#1a1a1a;border-radius:20px;padding:30px;width:100%;max-width:420px;text-align:center}
+    .box{background:#1a1a1a;border-radius:20px;padding:25px;width:100%;max-width:700px;text-align:center}
 
     h1{margin-bottom:10px}
-    .info{margin:15px 0;font-size:18px}
+    p{opacity:.7;margin-bottom:20px}
 
-    .price{font-size:28px;color:#00ffd5;margin:10px 0}
+    .layouts{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:20px}
 
-    .qr{width:260px;height:260px;background:#000;border-radius:12px;margin:20px auto;display:flex;align-items:center;justify-content:center;color:#555;font-size:14px}
+    .layout-item{background:#111;border:2px solid transparent;border-radius:14px;padding:20px;cursor:pointer;transition:.2s}
+    .layout-item:hover{border-color:#00ffd5}
+    .layout-item.active{border-color:#00ffd5;background:#0a2f2a}
 
-    .timer{font-size:22px;margin-top:10px;color:#ffcc00}
+    .layout-preview{height:140px;background:#000;border-radius:10px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;opacity:.6}
 
-    .btn{margin-top:20px;padding:12px 20px;border:none;border-radius:10px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer}
+    .price{font-size:18px;font-weight:bold;margin-top:5px;color:#00ffd5}
+
+    .btn{padding:14px;border:none;border-radius:12px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
   </style>
 </head>
 <body>
 
 <div class="box">
-  <h1>Scan QR Pembayaran</h1>
+  <h1>Pilih Layout 📐</h1>
+  <p>Pilih model cetak photobox</p>
 
-  <div class="info">Layout: <b id="layoutText">-</b></div>
-  <div class="price" id="priceText">Rp 0</div>
+  <div class="layouts">
+    <div class="layout-item" onclick="selectLayout(1,10000,this)">
+      <div class="layout-preview">Layout 1</div>
+      <div>1 Photo Strip</div>
+      <div class="price">Rp 10.000</div>
+    </div>
 
-  <div class="qr">QRIS PAYMENT</div>
+    <div class="layout-item" onclick="selectLayout(2,15000,this)">
+      <div class="layout-preview">Layout 2</div>
+      <div>2 Photo Strip</div>
+      <div class="price">Rp 15.000</div>
+    </div>
 
-  <div class="timer" id="timer">05:00</div>
+    <div class="layout-item" onclick="selectLayout(3,20000,this)">
+      <div class="layout-preview">Layout 3</div>
+      <div>3 Photo Strip</div>
+      <div class="price">Rp 20.000</div>
+    </div>
 
-  <!-- tombol demo bayar -->
-  <button class="btn" onclick="paySuccess()">✔ Demo Bayar</button>
+    <div class="layout-item" onclick="selectLayout(4,25000,this)">
+      <div class="layout-preview">Layout 4</div>
+      <div>4 Photo Strip</div>
+      <div class="price">Rp 25.000</div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="goNext()">Lanjut ke Pembayaran</button>
 </div>
 
 <script>
-  const layout = localStorage.getItem('layout')
-  const price = localStorage.getItem('price')
+  let selectedLayout = null
+  let selectedPrice = null
 
-  document.getElementById('layoutText').innerText = 'Layout ' + layout
-  document.getElementById('priceText').innerText = 'Rp ' + price
+  function selectLayout(id,price,el){
+    document.querySelectorAll('.layout-item').forEach(l=>l.classList.remove('active'))
+    el.classList.add('active')
 
-  // TIMER
-  let time = 300 // 5 menit
+    selectedLayout = id
+    selectedPrice = price
 
-  const timerEl = document.getElementById('timer')
+    localStorage.setItem('layout',id)
+    localStorage.setItem('price',price)
+  }
 
-  const interval = setInterval(()=>{
-    let m = Math.floor(time/60)
-    let s = time % 60
-    timerEl.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`
-    time--
-
-    if(time < 0){
-      clearInterval(interval)
-      alert('Waktu pembayaran habis')
-      window.location.href = 'layout.html'
+  function goNext(){
+    if(!selectedLayout){
+      alert('Pilih layout dulu')
+      return
     }
-  },1000)
 
-  function paySuccess(){
-    localStorage.setItem('paid','true')
-    window.location.href = 'camera.html'
+    window.location.href = 'payment.html'
   }
 </script>
 
 </body>
 </html>
+```
