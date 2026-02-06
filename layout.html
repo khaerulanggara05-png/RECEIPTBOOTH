@@ -1,25 +1,129 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Pilih Layout</title>
-<style>
-body{margin:0;background:#111;color:white;font-family:Arial}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;padding:20px}
-.card{background:#1f1f1f;padding:20px;border-radius:16px;text-align:center;cursor:pointer}
-</style>
+  <meta charset="UTF-8">
+  <title>Pilih Layout - Gozeal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      user-select: none;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .card {
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      cursor: pointer;
+      border: 2px solid #333;
+      transition: all 0.3s ease;
+    }
+
+    /* Efek saat kartu ditekan */
+    .card:active {
+      transform: scale(0.95);
+      border-color: #fff;
+      background: #222;
+    }
+
+    .layout-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .price {
+      font-size: 1.2rem;
+      color: #00ff00; /* Hijau agar terlihat seperti harga/uang */
+      opacity: 0.9;
+    }
+
+    /* Representasi visual frame (opsional) */
+    .preview-box {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 15px;
+    }
+    .dot { width: 10px; height: 15px; background: #444; border-radius: 2px; }
+  </style>
 </head>
 <body>
-<h2 style="text-align:center">Pilih Layout</h2>
-<div class="grid">
-<div class="card" onclick="select(1,10000)">Layout 1<br>Rp10.000</div>
-<div class="card" onclick="select(2,15000)">Layout 2<br>Rp15.000</div>
-<div class="card" onclick="select(3,20000)">Layout 3<br>Rp20.000</div>
-<div class="card" onclick="select(4,25000)">Layout 4<br>Rp25.000</div>
-</div>
-<script src="system.js"></script>
-<script>
-function select(layout,price){ updateTransaction({layout,price}); location.href='payment.html'; }
-</script>
+
+  <h2>PILIH LAYOUT</h2>
+
+  <div class="grid">
+    <div class="card" onclick="select(1, 10000, 4)">
+      <span class="layout-name">STRIPS (4 FOTO)</span>
+      <span class="price">Rp10.000</span>
+      <div class="preview-box">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="select(2, 15000, 6)">
+      <span class="layout-name">CLASSIC (6 FOTO)</span>
+      <span class="price">Rp15.000</span>
+      <div class="preview-box">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="select(3, 20000, 4)">
+      <span class="layout-name">WIDE (4 FOTO)</span>
+      <span class="price">Rp20.000</span>
+      <div class="preview-box">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+    </div>
+
+    <div class="card" onclick="select(4, 25000, 9)">
+      <span class="layout-name">COLLAGE (9 FOTO)</span>
+      <span class="price">Rp25.000</span>
+      <div class="preview-box">
+        <div class="dot" style="width:8px; height:8px;"></div>
+        </div>
+    </div>
+  </div>
+
+  <script src="system.js"></script>
+  <script>
+    function select(layout, price, photoCount) {
+      // Saya tambahkan photoCount agar nanti system.js tahu 
+      // berapa kali kamera harus menjepret.
+      updateTransaction({
+        layout: layout,
+        price: price,
+        photoCount: photoCount
+      });
+      
+      location.href = 'payment.html';
+    }
+  </script>
 </body>
 </html>
