@@ -1,0 +1,71 @@
+# layout.html
+
+```html
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pilih Layout - Receipt Photobox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{min-height:100vh;background:#0f0f0f;color:white;display:flex;flex-direction:column;align-items:center;padding:30px}
+
+    h1{margin-bottom:10px}
+    p{opacity:.7;margin-bottom:30px}
+
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:25px;width:100%;max-width:900px}
+
+    .card{background:#1a1a1a;border-radius:16px;padding:20px;text-align:center;cursor:pointer;transition:.3s;border:2px solid transparent}
+    .card:hover{transform:scale(1.03);border-color:#00ffd5}
+
+    .layout-box{height:180px;background:#000;border-radius:12px;margin-bottom:15px;display:flex;align-items:center;justify-content:center;font-size:24px;opacity:.6}
+
+    .price{font-size:20px;margin-top:10px;color:#00ffd5}
+
+  </style>
+</head>
+<body>
+
+  <h1>Pilih Layout</h1>
+  <p>Pilih layout photobox kamu</p>
+
+  <div class="grid">
+    <div class="card" onclick="selectLayout(1,15000)">
+      <div class="layout-box">Layout 1</div>
+      <h3>Single Strip</h3>
+      <div class="price">Rp 15.000</div>
+    </div>
+
+    <div class="card" onclick="selectLayout(2,20000)">
+      <div class="layout-box">Layout 2</div>
+      <h3>Double Strip</h3>
+      <div class="price">Rp 20.000</div>
+    </div>
+
+    <div class="card" onclick="selectLayout(3,25000)">
+      <div class="layout-box">Layout 3</div>
+      <h3>Grid 4 Photo</h3>
+      <div class="price">Rp 25.000</div>
+    </div>
+
+    <div class="card" onclick="selectLayout(4,30000)">
+      <div class="layout-box">Layout 4</div>
+      <h3>Premium Frame</h3>
+      <div class="price">Rp 30.000</div>
+    </div>
+  </div>
+
+<script>
+  function selectLayout(layout, price){
+    localStorage.setItem('layout', layout)
+    localStorage.setItem('price', price)
+
+    window.location.href = 'payment.html'
+  }
+</script>
+
+</body>
+</html>
+```
