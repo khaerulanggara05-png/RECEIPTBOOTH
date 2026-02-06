@@ -1,66 +1,14 @@
-
 <!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Pembayaran - Receipt Photobox</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-    body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
-
-    .box{background:#1a1a1a;border-radius:20px;padding:25px;width:100%;max-width:600px;text-align:center}
-
-    h1{margin-bottom:10px}
-    p{opacity:.7;margin-bottom:15px}
-
-    .summary{background:#111;border-radius:14px;padding:15px;margin-bottom:20px}
-    .row{display:flex;justify-content:space-between;margin-bottom:8px}
-
-    .qr{background:#000;border-radius:16px;height:220px;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:.7;margin-bottom:15px}
-
-    .btn{padding:14px;border:none;border-radius:12px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer;width:100%}
-  </style>
-</head>
-<body>
-
-<div class="box">
-  <h1>Pembayaran 💳</h1>
-  <p>Scan QR untuk melanjutkan</p>
-
-  <div class="summary">
-    <div class="row"><span>Layout</span><span id="layoutInfo">-</span></div>
-    <div class="row"><span>Harga</span><span id="priceInfo">-</span></div>
-  </div>
-
-  <div class="qr" id="qrBox">
-    QR PAYMENT
-  </div>
-
-  <button class="btn" onclick="confirmPayment()">Saya Sudah Bayar</button>
-</div>
-
+<html><head><meta charset="UTF-8"><title>Payment</title></head>
+<body style="background:#000;color:white;text-align:center;font-family:Arial">
+<h1>Scan QR Payment</h1>
+<p id="price"></p>
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PAYMENT" />
+<br><br>
+<button onclick="paid()">SIMULASI BAYAR</button>
+<script src="system.js"></script>
 <script>
-  const layout = localStorage.getItem('layout')
-  const price = localStorage.getItem('price')
-
-  if(!layout || !price){
-    window.location.href = 'layout.html'
-  }
-
-  document.getElementById('layoutInfo').innerText = 'Layout ' + layout
-  document.getElementById('priceInfo').innerText = 'Rp ' + price
-
-  // Simulasi QR
-  document.getElementById('qrBox').innerText = 'QRIS - Rp ' + price
-
-  function confirmPayment(){
-    // simulasi sukses
-    localStorage.setItem('paid','true')
-    window.location.href = 'camera.html'
-  }
+const tx=getTransaction(); document.getElementById('price').innerText='Total: Rp '+tx.price;
+function paid(){ updateTransaction({paymentStatus:true}); location.href='camera.html'; }
 </script>
-
-</body>
-</html>
+</body></html>
