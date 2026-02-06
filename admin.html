@@ -1,78 +1,204 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+<meta charset="UTF-8">
+<title>Admin Panel - Receipt Booth</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#0f0f0f;
+  color:#fff;
+}
+
+.admin-container{
+  max-width:480px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+}
+
+.subtitle{
+  text-align:center;
+  color:#aaa;
+  margin-bottom:20px;
+}
+
+.card{
+  background:#1c1c1c;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:15px;
+  border:1px solid #333;
+}
+
+.card h2{
+  margin-top:0;
+}
+
+label{
+  font-size:12px;
+  color:#aaa;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:6px 0 12px 0;
+  border-radius:6px;
+  border:none;
+  outline:none;
+}
+
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#00ffcc;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.pkg-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+pre{
+  background:#000;
+  padding:10px;
+  border-radius:6px;
+  max-height:200px;
+  overflow:auto;
+  font-size:11px;
+}
+
+.danger{
+  border:1px solid #ff4444;
+}
+
+.danger-btn{
+  background:#ff4444;
+  color:#fff;
+}
+</style>
 </head>
+
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="id"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Admin Panel - Receipt Booth&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link rel="stylesheet" href="css/admin.css"&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="admin-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;⚙️ Admin Panel&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;p class="subtitle"&gt;Receipt Booth Control Center&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;🧾 Info Booth&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;Nama Booth&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="text" id="boothNameInput" placeholder="MEMORY STORE"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;label&gt;Judul Receipt&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;input type="text" id="receiptTitleInput" placeholder="Receipt Booth"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="saveBooth()"&gt;💾 Simpan Info Booth&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;📦 Paket&lt;/h2&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="pkg-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Nama Paket 1&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" id="pkg1NameInput" placeholder="Basic Receipt"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Harga&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="number" id="pkg1PriceInput" placeholder="10000"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Nama Paket 2&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" id="pkg2NameInput" placeholder="Premium Receipt"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Harga&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="number" id="pkg2PriceInput" placeholder="20000"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="savePackages()"&gt;💾 Simpan Paket&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;📊 Log Transaksi&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;pre id="logBox"&gt;Belum ada transaksi&lt;/pre&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="loadLogs()"&gt;🔄 Refresh Log&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="card danger"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;⚠️ System&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="danger-btn" onclick="resetSystem()"&gt;🔄 Reset Semua Data&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script src="js/admin.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+<div class="admin-container">
+  <h1>⚙️ Admin Panel</h1>
+  <p class="subtitle">Receipt Booth Control Center</p>
+
+  <div class="card">
+    <h2>🧾 Info Booth</h2>
+    <label>Nama Booth</label>
+    <input type="text" id="boothNameInput" placeholder="MEMORY STORE">
+
+    <label>Judul Receipt</label>
+    <input type="text" id="receiptTitleInput" placeholder="Receipt Booth">
+
+    <button onclick="saveBooth()">💾 Simpan Info Booth</button>
+  </div>
+
+  <div class="card">
+    <h2>📦 Paket</h2>
+
+    <div class="pkg-grid">
+      <div>
+        <label>Nama Paket 1</label>
+        <input type="text" id="pkg1NameInput" placeholder="Basic Receipt">
+        <label>Harga</label>
+        <input type="number" id="pkg1PriceInput" placeholder="10000">
+      </div>
+
+      <div>
+        <label>Nama Paket 2</label>
+        <input type="text" id="pkg2NameInput" placeholder="Premium Receipt">
+        <label>Harga</label>
+        <input type="number" id="pkg2PriceInput" placeholder="20000">
+      </div>
+    </div>
+
+    <button onclick="savePackages()">💾 Simpan Paket</button>
+  </div>
+
+  <div class="card">
+    <h2>📊 Log Transaksi</h2>
+    <pre id="logBox">Belum ada transaksi</pre>
+    <button onclick="loadLogs()">🔄 Refresh Log</button>
+  </div>
+
+  <div class="card danger">
+    <h2>⚠️ System</h2>
+    <button class="danger-btn" onclick="resetSystem()">🔄 Reset Semua Data</button>
+  </div>
+</div>
+
+<script>
+// ===== STORAGE KEYS =====
+const STORAGE = {
+  boothName: "boothName",
+  receiptTitle: "receiptTitle",
+  pkg1Name: "pkg1Name",
+  pkg1Price: "pkg1Price",
+  pkg2Name: "pkg2Name",
+  pkg2Price: "pkg2Price",
+  logs: "transactionLogs"
+};
+
+// ===== LOAD DATA =====
+window.onload = () => {
+  document.getElementById("boothNameInput").value = localStorage.getItem(STORAGE.boothName) || "";
+  document.getElementById("receiptTitleInput").value = localStorage.getItem(STORAGE.receiptTitle) || "";
+  document.getElementById("pkg1NameInput").value = localStorage.getItem(STORAGE.pkg1Name) || "";
+  document.getElementById("pkg1PriceInput").value = localStorage.getItem(STORAGE.pkg1Price) || "";
+  document.getElementById("pkg2NameInput").value = localStorage.getItem(STORAGE.pkg2Name) || "";
+  document.getElementById("pkg2PriceInput").value = localStorage.getItem(STORAGE.pkg2Price) || "";
+  loadLogs();
+};
+
+// ===== SAVE BOOTH =====
+function saveBooth(){
+  localStorage.setItem(STORAGE.boothName, document.getElementById("boothNameInput").value);
+  localStorage.setItem(STORAGE.receiptTitle, document.getElementById("receiptTitleInput").value);
+  alert("Info booth disimpan ✅");
+}
+
+// ===== SAVE PACKAGES =====
+function savePackages(){
+  localStorage.setItem(STORAGE.pkg1Name, document.getElementById("pkg1NameInput").value);
+  localStorage.setItem(STORAGE.pkg1Price, document.getElementById("pkg1PriceInput").value);
+  localStorage.setItem(STORAGE.pkg2Name, document.getElementById("pkg2NameInput").value);
+  localStorage.setItem(STORAGE.pkg2Price, document.getElementById("pkg2PriceInput").value);
+  alert("Paket disimpan ✅");
+}
+
+// ===== LOGS =====
+function loadLogs(){
+  const logs = JSON.parse(localStorage.getItem(STORAGE.logs) || "[]");
+  if(logs.length === 0){
+    document.getElementById("logBox").innerText = "Belum ada transaksi";
+  }else{
+    document.getElementById("logBox").innerText = logs.join("\n\n");
+  }
+}
+
+// ===== RESET =====
+function resetSystem(){
+  if(confirm("Yakin reset semua data?")){
+    localStorage.clear();
+    alert("System reset ✅");
+    location.reload();
+  }
+}
+</script>
+
 </body>
 </html>
