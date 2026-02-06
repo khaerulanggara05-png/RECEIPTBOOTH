@@ -1,29 +1,18 @@
-<script>
-function createTransaction(){
-  const tx = {
-    id: 'TX-' + Date.now(),
-    layout: null,
-    price: null,
-    photo: null,
-    frame: null,
-    paid: false,
-    time: new Date().toISOString()
-  }
-  localStorage.setItem('transaction', JSON.stringify(tx))
-  return tx
-}
+const SYSTEM_KEY = 'RECEIPT_SYSTEM'
 
 function getTransaction(){
-  return JSON.parse(localStorage.getItem('transaction'))
+  return JSON.parse(localStorage.getItem(SYSTEM_KEY)) || {}
 }
 
-function updateTransaction(data){
+function setTransaction(data){
+  localStorage.setItem(SYSTEM_KEY, JSON.stringify(data))
+}
+
+function updateTransaction(newData){
   const tx = getTransaction()
-  const newTx = {...tx, ...data}
-  localStorage.setItem('transaction', JSON.stringify(newTx))
+  setTransaction({...tx, ...newData})
 }
 
-function clearTransaction(){
-  localStorage.removeItem('transaction')
+function resetTransaction(){
+  localStorage.removeItem(SYSTEM_KEY)
 }
-</script>
