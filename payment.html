@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pembayaran - Receipt Photobox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+    body{min-height:100vh;background:#0f0f0f;color:white;display:flex;align-items:center;justify-content:center}
+
+    .box{background:#1a1a1a;border-radius:20px;padding:30px;width:100%;max-width:420px;text-align:center}
+
+    h1{margin-bottom:10px}
+    .info{margin:15px 0;font-size:18px}
+
+    .price{font-size:28px;color:#00ffd5;margin:10px 0}
+
+    .qr{width:260px;height:260px;background:#000;border-radius:12px;margin:20px auto;display:flex;align-items:center;justify-content:center;color:#555;font-size:14px}
+
+    .timer{font-size:22px;margin-top:10px;color:#ffcc00}
+
+    .btn{margin-top:20px;padding:12px 20px;border:none;border-radius:10px;background:#00ffd5;color:#000;font-weight:bold;font-size:16px;cursor:pointer}
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>Scan QR Pembayaran</h1>
+
+  <div class="info">Layout: <b id="layoutText">-</b></div>
+  <div class="price" id="priceText">Rp 0</div>
+
+  <div class="qr">QRIS PAYMENT</div>
+
+  <div class="timer" id="timer">05:00</div>
+
+  <!-- tombol demo bayar -->
+  <button class="btn" onclick="paySuccess()">✔ Demo Bayar</button>
+</div>
+
+<script>
+  const layout = localStorage.getItem('layout')
+  const price = localStorage.getItem('price')
+
+  document.getElementById('layoutText').innerText = 'Layout ' + layout
+  document.getElementById('priceText').innerText = 'Rp ' + price
+
+  // TIMER
+  let time = 300 // 5 menit
+
+  const timerEl = document.getElementById('timer')
+
+  const interval = setInterval(()=>{
+    let m = Math.floor(time/60)
+    let s = time % 60
+    timerEl.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`
+    time--
+
+    if(time < 0){
+      clearInterval(interval)
+      alert('Waktu pembayaran habis')
+      window.location.href = 'layout.html'
+    }
+  },1000)
+
+  function paySuccess(){
+    localStorage.setItem('paid','true')
+    window.location.href = 'camera.html'
+  }
+</script>
+
+</body>
+</html>
+```
