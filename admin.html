@@ -2,17 +2,29 @@
 // 1. KEAMANAN: Cek PIN saat masuk
 function checkAccess() {
     const pin = prompt("Masukkan PIN Admin:");
-    if (pin !== "1234") { // Ganti 1234 dengan PIN pilihanmu
+    if (pin !== "1234") {
         alert("Akses Ditolak!");
         window.location.href = "index.html";
     }
 }
-// Aktifkan baris di bawah ini jika ingin proteksi PIN aktif:
-// window.onload = checkAccess;
+// window.onload = checkAccess; // Hapus // untuk aktifkan
 
-// 2. KONFIGURASI FRAME DINAMIS
+// 2. BARU: SIMPAN NAMA BOOTH & JUDUL
+function saveBoothSettings() {
+    const name = document.getElementById("adminBoothName").value;
+    const subtitle = document.getElementById("adminSubtitle").value;
+
+    if(!name || !subtitle) return alert("Isi Nama Booth dan Subtitle!");
+
+    localStorage.setItem("boothName", name);
+    localStorage.setItem("receiptTitle", subtitle);
+    
+    alert("Nama Booth Diperbarui! ✅");
+}
+
+// 3. KONFIGURASI FRAME DINAMIS
 function saveFrameConfig() {
-    const url = document.getElementById("frameUrlInput").value; // Ambil dari input baru
+    const url = document.getElementById("frameUrlInput").value;
     const target = document.getElementById("layoutTargetInput").value;
     
     if(!url || !target) return alert("Isi URL dan nomor layout!");
@@ -21,7 +33,7 @@ function saveFrameConfig() {
     alert("Frame Layout " + target + " diperbarui! ✅");
 }
 
-// 3. LOG TRANSAKSI (Fungsi yang kamu kirim)
+// 4. LOG TRANSAKSI
 function addLog(type, amount) {
     const logs = JSON.parse(localStorage.getItem("transactionLogs") || "[]");
     const newLog = {
@@ -31,22 +43,26 @@ function addLog(type, amount) {
     };
     logs.push(newLog);
     localStorage.setItem("transactionLogs", JSON.stringify(logs));
-    loadLogs(); // Refresh tampilan log setelah ditambah
+    loadLogs();
 }
 
-// 4. LOAD & TAMPILKAN LOG
-function loadLogs() {
+// 5. LOAD DATA SAAT HALAMAN DIBUKA
+function loadData() {
+    // Muat Nama Booth
+    document.getElementById("adminBoothName").value = localStorage.getItem("boothName") || "";
+    document.getElementById("adminSubtitle").value = localStorage.getItem("receiptTitle") || "";
+    
+    // Muat Log
     const logs = JSON.parse(localStorage.getItem("transactionLogs") || "[]");
     const logBox = document.getElementById("logBox");
-    
-    if(logs.length === 0) {
-        logBox.innerText = "Belum ada transaksi.";
-    } else {
-        // Tampilkan log dalam format yang rapi
-        logBox.innerText = logs.map(l => `[${l.time}] ${l.type} - Rp${l.amount}`).reverse().join("\n");
+    if(logBox) {
+        if(logs.length === 0) {
+            logBox.innerText = "Belum ada transaksi.";
+        } else {
+            logBox.innerText = logs.map(l => `[${l.time}] ${l.type} - Rp${l.amount}`).reverse().join("\n");
+        }
     }
 }
 
-// Panggil log saat halaman dibuka
-window.addEventListener('load', loadLogs);
+window.addEventListener('load', loadData);
 </script>
