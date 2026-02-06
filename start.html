@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Receipt Photobox</title>
+<style>
+body{margin:0;background:#000;color:white;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial}
+.box{text-align:center}
+button{padding:20px 40px;font-size:20px;border-radius:12px;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>📸 Receipt Photobox</h1>
+<p>Cetak kenanganmu</p>
+<button onclick="start()">START</button>
+</div>
+<script src="system.js"></script>
+<script>
+function start(){ resetTransaction(); location.href='layout.html'; }
+</script>
+</body>
+</html>
