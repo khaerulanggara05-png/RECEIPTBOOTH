@@ -1,14 +1,59 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><title>Payment</title></head>
-<body style="background:#000;color:white;text-align:center;font-family:Arial">
-<h1>Scan QR Payment</h1>
-<p id="price"></p>
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=PAYMENT" />
-<br><br>
-<button onclick="paid()">SIMULASI BAYAR</button>
-<script src="system.js"></script>
-<script>
-const tx=getTransaction(); document.getElementById('price').innerText='Total: Rp '+tx.price;
-function paid(){ updateTransaction({paymentStatus:true}); location.href='camera.html'; }
-</script>
-</body></html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment - Gozeal</title>
+    <style>
+        body { background: #000; color: white; text-align: center; font-family: 'Courier New', Courier, monospace; padding-top: 50px; }
+        .container { border: 2px dashed #444; display: inline-block; padding: 30px; border-radius: 10px; }
+        h1 { letter-spacing: 5px; margin-bottom: 10px; }
+        #price { font-size: 2rem; color: #00ff00; margin-bottom: 20px; }
+        img { border: 10px solid white; border-radius: 5px; margin: 20px 0; }
+        .btn-sim {
+            background: #fff; color: #000; border: none; padding: 15px 30px; 
+            font-weight: bold; cursor: pointer; border-radius: 50px; margin-top: 20px;
+        }
+        .btn-sim:active { transform: scale(0.95); opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>PAYMENT</h1>
+        <hr style="border: 1px dashed #333">
+        <p id="price">Rp 0</p>
+        
+        <div id="qr-container"></div>
+        
+        <p style="opacity: 0.6;">Scan QRIS untuk melanjutkan</p>
+        
+        <button class="btn-sim" onclick="paid()">SIMULASI BAYAR BERHASIL</button>
+    </div>
+
+    <script src="system.js"></script>
+    <script>
+        const tx = getTransaction();
+        
+        // Cek jika user lompat ke halaman ini tanpa pilih layout
+        if (!tx.price) {
+            alert("Pilih layout terlebih dahulu!");
+            location.href = 'layout.html';
+        }
+
+        document.getElementById('price').innerText = 'Total: Rp ' + tx.price.toLocaleString('id-ID');
+
+        // Generate QR dinamis dengan data transaksi
+        const qrImg = document.createElement('img');
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=GOZEAL-PAY-${tx.price}-${Date.now()}`;
+        document.getElementById('qr-container').appendChild(qrImg);
+
+        function paid(){ 
+            updateTransaction({ 
+                paymentStatus: 'PAID',
+                paidAt: new Date().toISOString() 
+            }); 
+            location.href = 'camera.html'; 
+        }
+    </script>
+</body>
+</html>
