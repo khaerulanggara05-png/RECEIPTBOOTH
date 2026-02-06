@@ -1,0 +1,122 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2867
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 /* css/admin.css */\
+*\{\
+  box-sizing:border-box;\
+  font-family: 'Segoe UI', system-ui, sans-serif;\
+\}\
+\
+body\{\
+  margin:0;\
+  background:#0f172a;\
+  color:#e5e7eb;\
+\}\
+\
+.admin-container\{\
+  max-width:1100px;\
+  margin:auto;\
+  padding:40px 20px;\
+\}\
+\
+h1\{\
+  font-size:32px;\
+  margin-bottom:5px;\
+\}\
+\
+.subtitle\{\
+  color:#94a3b8;\
+  margin-bottom:30px;\
+\}\
+\
+.card\{\
+  background:#020617;\
+  border:1px solid #1e293b;\
+  border-radius:16px;\
+  padding:24px;\
+  margin-bottom:24px;\
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);\
+\}\
+\
+.card h2\{\
+  margin-bottom:16px;\
+\}\
+\
+label\{\
+  display:block;\
+  margin:10px 0 6px;\
+  font-size:14px;\
+  color:#cbd5f5;\
+\}\
+\
+input\{\
+  width:100%;\
+  padding:12px 14px;\
+  border-radius:10px;\
+  border:1px solid #334155;\
+  background:#020617;\
+  color:#fff;\
+  outline:none;\
+\}\
+\
+input:focus\{\
+  border-color:#38bdf8;\
+\}\
+\
+button\{\
+  margin-top:16px;\
+  padding:12px 18px;\
+  border-radius:10px;\
+  border:none;\
+  cursor:pointer;\
+  font-weight:600;\
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);\
+  color:#020617;\
+  transition:.2s;\
+\}\
+\
+button:hover\{\
+  transform:translateY(-1px);\
+  box-shadow:0 6px 15px rgba(56,189,248,.4);\
+\}\
+\
+.pkg-grid\{\
+  display:grid;\
+  grid-template-columns:1fr 1fr;\
+  gap:20px;\
+\}\
+\
+pre\{\
+  background:#020617;\
+  padding:16px;\
+  border-radius:10px;\
+  max-height:220px;\
+  overflow:auto;\
+  font-size:13px;\
+  border:1px solid #1e293b;\
+\}\
+\
+.danger\{\
+  border:1px solid #7f1d1d;\
+  background:#020617;\
+\}\
+\
+.danger-btn\{\
+  background:linear-gradient(135deg,#ef4444,#b91c1c);\
+  color:#fff;\
+\}\
+\
+.danger-btn:hover\{\
+  box-shadow:0 6px 15px rgba(239,68,68,.4);\
+\}\
+\
+@media(max-width:768px)\{\
+  .pkg-grid\{\
+    grid-template-columns:1fr;\
+  \}\
+\}\
+}
