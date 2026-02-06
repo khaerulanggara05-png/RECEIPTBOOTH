@@ -1,57 +1,147 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="id">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+<meta charset="UTF-8">
+<title>Kiosk Receipt Booth</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#111;
+  color:#fff;
+}
+
+.kiosk-container{
+  max-width:420px;
+  margin:auto;
+  padding:20px;
+}
+
+.kiosk-header{
+  text-align:center;
+  border-bottom:1px solid #444;
+  padding-bottom:10px;
+}
+
+.packages{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+
+.package-card{
+  flex:1;
+  background:#1f1f1f;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+  border:1px solid #333;
+  transition:0.2s;
+}
+
+.package-card:hover{
+  transform:scale(1.03);
+  border-color:#00ffcc;
+}
+
+.package-card button{
+  margin-top:10px;
+  padding:8px 12px;
+  border:none;
+  border-radius:5px;
+  background:#00ffcc;
+  cursor:pointer;
+}
+
+.transaction{
+  margin-top:25px;
+  padding:15px;
+  border:1px dashed #555;
+  border-radius:10px;
+}
+
+.print-btn{
+  width:100%;
+  margin-top:10px;
+  padding:12px;
+  border:none;
+  border-radius:8px;
+  background:#00ffcc;
+  font-weight:bold;
+  cursor:pointer;
+}
+</style>
 </head>
+
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="id"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Kiosk Receipt Booth&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;link rel="stylesheet" href="css/kiosk.css"&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="kiosk-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="kiosk-header"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1 id="boothName"&gt;MEMORY STORE&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p id="receiptTitle"&gt;Receipt Booth&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="packages"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="package-card" onclick="selectPackage(1)"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 id="pkg1Name"&gt;Basic Receipt&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p id="pkg1Price"&gt;Rp 10.000&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button&gt;Pilih Paket&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="package-card" onclick="selectPackage(2)"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h2 id="pkg2Name"&gt;Premium Receipt&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p id="pkg2Price"&gt;Rp 20.000&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button&gt;Pilih Paket&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="transaction"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;Transaksi&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Paket: &lt;span id="selectedPackage"&gt;-&lt;/span&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Harga: &lt;span id="selectedPrice"&gt;-&lt;/span&gt;&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="print-btn" onclick="printReceipt()"&gt;Print Receipt&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;script src="js/kiosk.js"&gt;&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+<div class="kiosk-container">
+  <header class="kiosk-header">
+    <h1 id="boothName">MEMORY STORE</h1>
+    <p id="receiptTitle">Receipt Booth</p>
+  </header>
+
+  <section class="packages">
+    <div class="package-card" onclick="selectPackage(1)">
+      <h2 id="pkg1Name">Basic Receipt</h2>
+      <p id="pkg1Price">Rp 10.000</p>
+      <button>Pilih Paket</button>
+    </div>
+
+    <div class="package-card" onclick="selectPackage(2)">
+      <h2 id="pkg2Name">Premium Receipt</h2>
+      <p id="pkg2Price">Rp 20.000</p>
+      <button>Pilih Paket</button>
+    </div>
+  </section>
+
+  <section class="transaction">
+    <h3>Transaksi</h3>
+    <p>Paket: <span id="selectedPackage">-</span></p>
+    <p>Harga: <span id="selectedPrice">-</span></p>
+    <button class="print-btn" onclick="printReceipt()">Print Receipt</button>
+  </section>
+</div>
+
+<script>
+let selectedPkg = "";
+let selectedPrice = "";
+
+function selectPackage(pkg){
+  if(pkg === 1){
+    selectedPkg = "Basic Receipt";
+    selectedPrice = "Rp 10.000";
+  }else if(pkg === 2){
+    selectedPkg = "Premium Receipt";
+    selectedPrice = "Rp 20.000";
+  }
+
+  document.getElementById("selectedPackage").innerText = selectedPkg;
+  document.getElementById("selectedPrice").innerText = selectedPrice;
+}
+
+function printReceipt(){
+  if(selectedPkg === ""){
+    alert("Pilih paket dulu!");
+    return;
+  }
+
+  const receipt = `
+=== MEMORY STORE ===
+Receipt Booth
+
+Paket : ${selectedPkg}
+Harga : ${selectedPrice}
+
+Terima kasih 🙏
+`;
+
+  console.log(receipt);
+  alert("Receipt siap dicetak!\n\n" + receipt);
+}
+</script>
+
 </body>
 </html>
