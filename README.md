@@ -24,3 +24,4 @@ Sistem photobox mandiri (kiosk) berbasis web yang dirancang khusus untuk output 
 ├── system.js           # Logika utama transaksi & penyimpanan
 ├── vercel.json         # Konfigurasi deployment Vercel
 └── kiosk.css           # Gaya utama & optimasi cetak thermal
+Commit dan Push lagi.
